@@ -1,0 +1,8 @@
+all:
+  hosts:
+    example:
+      ansible_host: 192.168.1.120
+      ansible_password: ssh-password-to-example
+    anotherhost:
+      ansible_host: 192.168.1.121
+      ansible_password: ssh-password-to-anotherhost

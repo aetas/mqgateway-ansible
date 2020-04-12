@@ -1,0 +1,13 @@
+- name: Download MqGateway
+  get_url:
+    url: "https://github.com/aetas/mqgateway/releases/download/v{{ mqgateway_version }}/mqgateway-{{ mqgateway_version }}.jar"
+    dest: "/opt/mqgateway/mqgateway-{{ mqgateway_version }}-all.jar"
+    mode: '0644'
+  when: mqgateway_source == "github"
+
+- name: Copy MqGateway from local to remote
+  copy:
+    src: "{{ mqgateway_source_local_path }}"
+    dest: "/opt/mqgateway/mqgateway-{{ mqgateway_version }}-all.jar"
+    mode: '0644'
+  when: mqgateway_source == "local"

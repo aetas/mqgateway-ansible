@@ -1,0 +1,40 @@
+- name: Create MqGateway directories
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "/opt/mqgateway"
+    - "/opt/mqgateway/logs"
+  
+- name: Copy MqGateway configuration to host
+  copy: 
+    src: "{{ playbook_dir }}/files/{{ inventory_hostname }}/gateway.yaml"
+    dest: "/opt/mqgateway/gateway.yaml"
+
+- name: Install Java
+  apt:
+    name: "openjdk-8-jre-headless"
+    state: present
+  register: result
+  until: result is succeeded
+
+- name: Prepare MqGateway application
+  include_tasks: download_mqgateway.yaml
+
+- name: Prepare start_gateway script
+  template:
+    src: start_gateway.sh
+    dest: "/opt/mqgateway/start_gateway.sh"
+    mode: 0744
+
+- name: Create mqgateway.service in systemd
+  copy:
+    src: mqgateway.service
+    dest: /lib/systemd/system/mqgateway.service
+
+- name: Enable mqgateway service
+  systemd:
+    name: mqgateway
+    state: started
+    enabled: yes
+    masked: no

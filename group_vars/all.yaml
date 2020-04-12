@@ -1,0 +1,18 @@
+# Sets the timezone for your server
+# You can find a list here https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+server_timezone: Europe/Warsaw
+
+# Update all apt packages when playbook is run
+keep_packages_updated: false
+
+# Type of the system to install MqGateway on (e.g. NanoPi or RaspberryPi)
+system_type: NanoPi
+
+# MqGateway configuration
+mqgateway_version: "0.9.0"
+mqgateway_source: github     # local or github
+# mqgateway_source_local_path: "/data/mqgateway/mqtt-gateway-{{ mqgateway_version }}-all.jar" # only needed if `mqgateway_source` is `local`
+mqgateway_heap_memory: "64m"
+
+# Python path on MqGateway host
+ansible_python_interpreter: /usr/bin/python3

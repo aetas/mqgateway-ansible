@@ -1,0 +1,21 @@
+- name: "Set hostname to {{ inventory_hostname }}"
+  hostname:
+    name: "{{ inventory_hostname }}"
+
+- name: "Set timezone to {{ server_timezone }}"
+  timezone:
+    name: "{{ server_timezone }}"
+
+- name: Update apt-cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+  register: result
+  until: result is succeeded
+
+- name: Upgrade all packages
+  apt:
+    upgrade: true
+    state: latest
+  when: keep_packages_updated
+

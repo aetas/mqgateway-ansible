@@ -1,0 +1,20 @@
+- name: Checkout WiringNP
+  git:
+    repo: 'https://github.com/friendlyarm/WiringNP'
+    dest: /opt/WiringNP
+    version: nanopi-m1
+    force: yes
+  when: system_type == "NanoPi"
+  
+- name: Ensure build has executable permission
+  file:
+    path: "/opt/WiringNP/build"
+    mode: "0744"
+  when: system_type == "NanoPi"
+
+- name: Install WiringNP
+  shell: "./build"
+  args:
+    chdir: /opt/WiringNP
+    executable: /bin/bash
+  when: system_type == "NanoPi"

@@ -1,0 +1,10 @@
+---
+- name: Provision MqGateway on all devices
+  gather_facts: no
+  hosts: all
+  remote_user: root
+  roles:
+    - role: essentials
+    - role: wiring
+    - role: mqgateway
+
